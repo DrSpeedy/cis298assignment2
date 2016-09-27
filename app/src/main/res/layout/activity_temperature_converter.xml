@@ -14,8 +14,9 @@
 
     <EditText
         android:id="@+id/temperature_input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -106,11 +107,18 @@
             </RadioGroup>
         </LinearLayout>
 
-
     </LinearLayout>
     <Button
         android:id="@+id/convert_button"
         android:text="@string/convert_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView android:id="@+id/conversion_solution"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView android:id="@+id/conversion_formula"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

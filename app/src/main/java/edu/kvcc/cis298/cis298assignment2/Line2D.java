@@ -16,15 +16,16 @@ public class Line2D implements ILine {
         YIntercept = P[1] - (Slope * P[0]);
     }
 
+    // Get the return value of the function of the line
     public double f(double x) {
         return (Slope * x) + YIntercept;
     }
 
+    // Return the equation of the line in string form
     @Override
     public String toString() {
         String yInt = (YIntercept >= 0) ? ("+ " + YIntercept) : ("- " + (-YIntercept));
         String str = "" + Slope + "(x) " + yInt;
-
         return str;
     }
 }
