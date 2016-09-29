@@ -5,20 +5,20 @@ package edu.kvcc.cis298.cis298assignment2;
  */
 
 public class ScaleTransformer {
-    private final Line2D Formula;
+    private final Line2D mFormula;
 
     public ScaleTransformer(TempScale tempFrom, TempScale tempTo) {
-        double p[] = {tempFrom.FreezingTemp, tempTo.FreezingTemp};
-        double q[] = {tempFrom.BoilingTemp, tempTo.BoilingTemp};
-        Formula = new Line2D(p, q);
+        double p[] = {tempFrom.mFreezingTemp, tempTo.mFreezingTemp};
+        double q[] = {tempFrom.mBoilingTemp, tempTo.mBoilingTemp};
+        mFormula = new Line2D(p, q);
     }
 
     public double convert(double deg) {
-        return Formula.f(deg);
+        return mFormula.solution(deg, 2);
     }
 
     @Override
     public String toString() {
-        return Formula.toString();
+        return mFormula.toString();
     }
 }

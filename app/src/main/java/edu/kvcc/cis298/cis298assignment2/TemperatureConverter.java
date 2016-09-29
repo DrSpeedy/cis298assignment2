@@ -11,31 +11,21 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import java.util.Hashtable;
-
 // TODO: CLEAN!
 public class TemperatureConverter extends AppCompatActivity {
 
-    private Hashtable<String, TempScale> TempScales;
-
-    // TODO: Abstract TempScales to its own class
-    private Hashtable initTempScales() {
-        Hashtable tempScales = new Hashtable();
-        tempScales.put(getResources().getString(R.string.fahrenheit), new TempScale("Fahrenheit", 212, 32));
-        tempScales.put(getResources().getString(R.string.celsius), new TempScale("Celsius", 100, 0));
-        tempScales.put(getResources().getString(R.string.kelvin), new TempScale("Kelvin", 373.1339, 273.15));
-        tempScales.put(getResources().getString(R.string.rankin), new TempScale("Rankine", 671.64102, 491.67));
-
-        return tempScales;
-    }
+    private TempScaleContainer mTempScaleContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temperature_converter);
 
-        TempScales = initTempScales();
-
+        mTempScaleContainer = new TempScaleContainer(TemperatureConverter.this);
+        mTempScaleContainer.add(R.string.fahrenheit, 212, 32);
+        mTempScaleContainer.add(R.string.celsius, 100, 0);
+        mTempScaleContainer.add(R.string.kelvin, 373.1339, 273.15);
+        mTempScaleContainer.add(R.string.rankin, 671.64102, 491.67);
         // Pull in activity widget resource handles
         final EditText mTemperatureInput = (EditText) findViewById(R.id.temperature_input);
         final RadioGroup mConvertFromGroup = (RadioGroup) findViewById(R.id.convert_from);
@@ -53,14 +43,14 @@ public class TemperatureConverter extends AppCompatActivity {
                 final RadioButton mSelectionTo = (RadioButton) findViewById(mConvertToGroup.getCheckedRadioButtonId());
 
                 // Convert temps
-                TempScale convertFrom = TempScales.get(mSelectionFrom.getText());
-                TempScale convertTo = TempScales.get(mSelectionTo.getText());
+                TempScale convertFrom = mTempScaleContainer.get(mSelectionFrom.getText());
+                TempScale convertTo = mTempScaleContainer.get(mSelectionTo.getText());
 
                 ScaleTransformer transformer = new ScaleTransformer(convertFrom, convertTo);
                 double solution = transformer.convert(input);
 
                 // Update text
-                mSolutionText.setText("" + solution + " deg " + convertTo.Name);
+                mSolutionText.setText("" + solution + " deg " + convertTo.mName);
                 mFormulaText.setText(transformer.toString());
             }
         });

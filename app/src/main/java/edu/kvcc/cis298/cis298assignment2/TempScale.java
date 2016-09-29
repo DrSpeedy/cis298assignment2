@@ -5,13 +5,13 @@ package edu.kvcc.cis298.cis298assignment2;
  */
 
 public final class TempScale {
-    public final String Name;
-    public final double BoilingTemp;
-    public final double FreezingTemp;
+    public final String mName;
+    public final double mBoilingTemp;
+    public final double mFreezingTemp;
 
     public TempScale(String name, double boilingTemp, double freezingTemp) {
-        Name = name;
-        BoilingTemp = boilingTemp;
-        FreezingTemp = freezingTemp;
+        mName = name;
+        mBoilingTemp = boilingTemp;
+        mFreezingTemp = freezingTemp;
     }
 }
