@@ -9,16 +9,22 @@ public class Line2D {
     public double mYIntercept;
 
     // Arguments P and Q are coordinate pairs on a two
-    // dimensional cartesian plane
+    // dimensional cartesian plane.
     public Line2D(double P[], double Q[]) {
         // Store equation for line in y-intercept (y=mx+b) form
-        // Truncate doubles to two decimal points
+        // Truncate doubles to two decimal points.
         mSlope = Math.floor((Q[1] - P[1]) / (Q[0] - P[0]) * 100) / 100;
         mYIntercept = Math.floor(P[1] - (mSlope * P[0]) * 100) / 100;
     }
 
-    // Get the return value of the function of the line
-    // decimalPlaces = -1 to ignore truncation
+    // Get the solution to the function for the line
+    // without any truncation.
+    public double solution(double x) {
+        return solution(x, -1);
+    }
+
+    // Get the solution of the function for the line
+    // decimalPlaces = -1 to ignore truncation.
     public double solution(double x, int decimalPlaces) {
         double solution = (mSlope * x) + mYIntercept;
 
@@ -30,10 +36,7 @@ public class Line2D {
         return solution;
     }
 
-    // Get the inverse return value of the function of the line
-    public double i(double y) { return (y - mYIntercept) / mSlope; }
-
-    // Return the equation of the line in string form
+    // Return the equation of the line in string form.
     @Override
     public String toString() {
         String yInt = (mYIntercept >= 0) ? ("+ " + mYIntercept) : ("- " + (-mYIntercept));
