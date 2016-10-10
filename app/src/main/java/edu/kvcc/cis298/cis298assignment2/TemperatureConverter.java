@@ -19,7 +19,7 @@ import android.widget.Toast;
 public class TemperatureConverter extends AppCompatActivity {
 
     // Tag to be used for log messages
-    public static final String TAG = "TemperatureConverter";
+    public final String TAG = this.getClass().getSimpleName();
     // Key used to retrieve relevant data from the saved instance
     // bundle to repopulate fields after the activity is rotated.
     private final String KEY_ROTATE_CHECKED_FROM = "rotation.convertfrom";
@@ -68,27 +68,29 @@ public class TemperatureConverter extends AppCompatActivity {
                 // Get user input
                 final String inputString = mTemperatureInput.getText().toString();
                 final double input;
+                final RadioButton mSelectionFrom;
+                final RadioButton mSelectionTo;
                 try {
                     input = Double.parseDouble(inputString);
+                    // Verify both have an option selected
+                    mSelectionFrom = (RadioButton) findViewById(mConvertFromGroup.getCheckedRadioButtonId());
+                    mSelectionTo = (RadioButton) findViewById(mConvertToGroup.getCheckedRadioButtonId());
+
+                    // Convert temps
+                    TempScale convertFrom = mTempScaleContainer.get(mSelectionFrom.getText());
+                    TempScale convertTo = mTempScaleContainer.get(mSelectionTo.getText());
+
+                    ScaleTransformer transformer = new ScaleTransformer(convertFrom, convertTo);
+                    double solution = transformer.convert(input);
+
+                    // Update text
+                    mSolutionText.setText("" + solution + " deg " + convertTo.mName);
+                    mFormulaText.setText(transformer.toString());
                 }
                 catch(Exception e) {
                     Log.d(TAG, "Failed to convert user input!");
-                    return;
+                    Toast.makeText(TemperatureConverter.this, "Error: Bad input!", Toast.LENGTH_SHORT).show();
                 }
-
-                final RadioButton mSelectionFrom = (RadioButton) findViewById(mConvertFromGroup.getCheckedRadioButtonId());
-                final RadioButton mSelectionTo = (RadioButton) findViewById(mConvertToGroup.getCheckedRadioButtonId());
-
-                // Convert temps
-                TempScale convertFrom = mTempScaleContainer.get(mSelectionFrom.getText());
-                TempScale convertTo = mTempScaleContainer.get(mSelectionTo.getText());
-
-                ScaleTransformer transformer = new ScaleTransformer(convertFrom, convertTo);
-                double solution = transformer.convert(input);
-
-                // Update text
-                mSolutionText.setText("" + solution + " deg " + convertTo.mName);
-                mFormulaText.setText(transformer.toString());
             }
         });
     }
